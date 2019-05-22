@@ -1,7 +1,12 @@
 import VueRouter from 'vue-router';
 import Vue from 'vue'
-import Home from './components/Home.vue'
-import Example from './components/ExampleComponent.vue'
+
+import Dashboard from './components/dashboard/dashboard.vue'
+import Clientes from './components/clientes/Clientes.vue'
+import Inventario from './components/Inventario/Inventario.vue'
+import Bodegas from './components/bodegas/Bodegas';
+import Ventas from './components/ventas/Ventas'
+
 Vue.use(VueRouter)
 
 export default new VueRouter({
@@ -9,13 +14,29 @@ export default new VueRouter({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            name: 'Dashboard',
+            component: Dashboard
         },
         {
-            path: '/example/:id?',
-            name: 'example',
-            component: Example
-        }
+            path: '/inventario',
+            name: 'Inventario',
+            component: Inventario
+        },
+        {
+            path: '/clientes',
+            name: 'clientes',
+            component: Clientes
+        },
+        {
+            path: '/bodegas',
+            name: 'bodegas',
+            component: Bodegas
+        },
+        {
+            path: '/ventas/:tipo?',
+            name: 'ventas',
+            component: Ventas
+        },
+
     ]
 })

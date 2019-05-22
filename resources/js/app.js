@@ -1,33 +1,38 @@
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+
 require('./bootstrap');
 window.Vue = require('vue');
 import routes from './routes.js';
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-
 import main from './components/main.vue'
+import navbar from './components/navbar.vue'
+const eventHub = new Vue() // Single event hub
+Vue.mixin({
+    data: function () {
+        return {
+            eventHub: eventHub
+        }
+    }
+})
+import Vuetify from 'vuetify'
+import VueNoty from 'vuejs-noty'
+import 'vuetify/src/stylus/app.styl';
+import 'vuejs-noty/dist/vuejs-noty.css'
+import VuetifyConfirm from 'vuetify-confirm';
+import vSelect from 'vue-select'
+Vue.component('v-select', vSelect)
+Vue.use(Vuetify)
+Vue.use(VueNoty, {
+    timeout: 3500,
+    progressBar: true,
+    theme:'metroui'
+  })
+Vue.use(VuetifyConfirm)
 const app = new Vue({
     el: '#app',
-    router:routes,
-    render: (h) => h(main)   
+    router: routes,
+    render: (h) => h(main)
+})
+const nav = new Vue({
+    el: '#nav',
+    router: routes,
+    render: (h) => h(navbar)
 })

@@ -3,11 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\User;
 class ExampleController extends Controller
 {
-    public function create(Request $request,$id){
+    public function show(Request $request){
 
-        return $request->all();
+            return User::orderBy('created_at','desc')->get();
+    }
+    public function create(Request $request){
+        
+        return User::create($request->all());
     }
 }

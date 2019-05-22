@@ -17,4 +17,24 @@ Route::get('/', function () {
 Route::get('/example/{id?}/{d?}', function () {
     return view('welcome');
 });
+Route::get('/dashboard', function () {
+    return view('welcome');
+});
 
+Route::get('/inventario/{id?}/{d?}', function () {
+    return view('welcome');
+});
+Route::get('/clientes', function () {
+    return view('welcome');
+});
+Route::get('/sucursales/{id?}/{d?}', function () {
+    return view('welcome');
+});
+
+Route::get('/bodegas/{id?}/{d?}', function () {
+    return view('welcome');
+});
+
+Route::get('/ventas/{id?}', function () {
+    return view('welcome');
+});
