@@ -7,22 +7,13 @@ use Illuminate\Http\Request;
 
 class ProductosController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {   
         $sucursal=0;
         return $producto=Productos::all();
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
 
     public function getProducto(Reqeuest $request,$id)
     {
@@ -31,7 +22,10 @@ class ProductosController extends Controller
     public function create(Request $request)
     {
 
-        $producto=Productos::create($request->all());
+        $producto=new Productos($request->all());
+        $producto->bodega_id=7;
+        $producto->sucursal_id=1;
+        $producto->save();
         return $producto;
     }
 

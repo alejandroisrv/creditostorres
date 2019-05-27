@@ -36,5 +36,12 @@ Route::post('/bodega','BodegaController@create');
 Route::post('/bodegas/update/{id}','BodegaController@update');
 Route::get('/bodega/delete/{id}','BodegaController@destroy');
 
-Route::get('/ventas','BodegaController@index');
-Route::post('/venta','BodegaController@create');
+Route::get('/ventas','VentasController@index');
+
+Route::get('/ventas/tipos','VentasController@getTipos');
+Route::post('/ventas','VentasController@create');
+
+Route::get('/sucursales','SucursalController@index');
+Route::post('/sucursal','SucursalController@create');
+Route::post('/sucursales/update/{id}','SucursalController@update');
+Route::get('/sucursal/delete/{id}','SucursalController@destroy');

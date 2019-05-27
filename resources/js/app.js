@@ -12,13 +12,16 @@ Vue.mixin({
         }
     }
 })
+
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect);
+import 'vue-multiselect/dist/vue-multiselect.min.css';
 import Vuetify from 'vuetify'
 import VueNoty from 'vuejs-noty'
 import 'vuetify/src/stylus/app.styl';
 import 'vuejs-noty/dist/vuejs-noty.css'
 import VuetifyConfirm from 'vuetify-confirm';
-import vSelect from 'vue-select'
-Vue.component('v-select', vSelect)
+
 Vue.use(Vuetify)
 Vue.use(VueNoty, {
     timeout: 3500,

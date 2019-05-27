@@ -8,14 +8,11 @@
         <div class="col-xs-12">
           <div class="box box-default">
             <div class="box-body text-right">
-              <button class="btn btn-default" data-toggle="modal" data-target="#modal-entregar">
+              <button class="btn btn-default" @click="openEntregar">
                 <i class="fa fa-truck mr-2"></i>
                 Entregar productos
               </button>
-              <button
-                class="btn btn-default"
-                data-toggle="modal"
-                data-target="#modal-abastecer"
+              <button @click="openAbastercer"
               >Abastecer inventario</button>
               <button class="btn btn-primary" @click="nuevoProducto">
                 <i class="fa fa-plus mr-2"></i> Nuevo Producto
@@ -42,8 +39,8 @@
                   <tr v-for="item in productos" :key="item.id">
                     <td>{{ item.nombre }}</td>
                     <td>{{item.cantidad}}</td>
-                    <td>{{ item.precioContado}}</td>
-                    <td>{{ item.precioCredito }}</td>
+                    <td>{{ item.precio_contado}}</td>
+                    <td>{{ item.precio_credito }}</td>
                     <td>
                       <button class="btn btn-default btn-sm" @click="verProducto(item)"><i class="fa fa-eye"></i></button>
                       <button class="btn btn-primary btn-sm" @click="editarProducto(item)"><i class="fa fa-edit"></i></button>
@@ -64,8 +61,8 @@
         </div>
       </div>
       <modal-producto :producto="productoModal" :titulo="tituloModal" :url="urlModal" :notificacion="notificacionModal"></modal-producto>
-      <modal-abastecer></modal-abastecer>
-      <modal-entregar></modal-entregar>
+      <modal-abastecer :productoList="productos"></modal-abastecer>
+      <modal-entregar :productoList="productos"></modal-entregar>
       <div></div>
     </section>
   </div>
@@ -146,6 +143,12 @@ export default {
     },
     openModal() {
       this.eventHub.$emit("openModal");
+    },
+    openAbastercer() {
+      this.eventHub.$emit("openAbastercer");
+    },
+    openEntregar(){
+       this.eventHub.$emit("openEntregar");
     }
   }
 };
