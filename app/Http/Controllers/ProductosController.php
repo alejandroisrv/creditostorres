@@ -23,7 +23,7 @@ class ProductosController extends Controller
     {
 
         $producto=new Productos($request->all());
-        $producto->bodega_id=7;
+        $producto->bodega_id=1;
         $producto->sucursal_id=1;
         $producto->save();
         return $producto;
@@ -35,8 +35,25 @@ class ProductosController extends Controller
         $producto->update($request->all());
         return $producto;
     }
+    public function abastecer(Request $request,$id){
+
+        $data=$request->all();
+
+        for($i=0;count($data['productos']);$i++){
+            $producto=Producto::find($data[$i]['producto']);
+            $producto->cantidad +=$data[$i]['cantidad']; 
+            $producto->save();
+        }
+
+        
+
+    }
+    public function entregar(Request $request){
 
 
+
+
+    }
     public function destroy($id)
     {
         return Productos::destroy($id);

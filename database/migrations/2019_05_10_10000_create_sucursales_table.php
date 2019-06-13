@@ -18,10 +18,11 @@ class CreateSucursalesTable extends Migration
             $table->integer('encargado_id')->unsigned();    
             $table->string('telefono',30);
             $table->string('direccion',100);
-            $table->string('municipio');
+            $table->integer('municipio_id')->unsigned(); 
             $table->timestamps();
             $table->index(['id']);
             $table->engine = "InnoDB";
+            $table->foreign('municipio_id')->references('id')->on('municipios')->onDelete('cascade');
 
         });
     }

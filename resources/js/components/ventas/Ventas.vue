@@ -78,35 +78,45 @@ export default {
       ventas: "",
       clientes: "",
       productos: [],
-      tipo: ""
+      tipo: "",
+      venta: ""
     };
   },
   components: {
-    modalVenta
+    modalVenta,
+    "bootstrap-modal": require("vue2-bootstrap-modal")
   },
   created() {
     this.getVentas();
     this.eventHub.$on("sendVentas", rs => {
       this.getVentas();
     });
-    this.tipo = this.$route.params.tipo;
   },
   methods: {
     getVentas() {
       axios.get("/api/ventas").then(rs => {
         this.ventas = rs.data;
-        console.log(this.ventas);
       });
     },
 
     nuevaVenta() {
       this.openModal();
     },
+    verVenta(venta) {
+      this.modalVenta = venta;
+      this.openVenta();
+    },
     notificacion(texto) {
       this.$noty.success(texto);
     },
     openModal() {
       this.eventHub.$emit("openModal");
+    },
+    openVenta() {
+      this.$refs.ventaDetalle.open();
+    },
+    closeTheModalVenta() {
+      this.$refs.ventaDetalle.close();
     }
   }
 };

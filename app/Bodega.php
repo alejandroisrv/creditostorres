@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Bodega extends Model
 {   
-    protected $fillable = ['telefono','direccion','municipio'];
+    protected $fillable = ['telefono','direccion','municipio_id'];
 
     public function sucursal(){
         
@@ -14,9 +14,7 @@ class Bodega extends Model
 
     }
 
-    public function productos(){
+ public function productos(){
         return $this->hasMany('App\Productos');
-    }
-
-    
+    }    
 }

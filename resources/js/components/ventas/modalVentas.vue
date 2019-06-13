@@ -135,7 +135,7 @@ import axios from "axios";
 import $ from "jquery";
 import { log } from "util";
 import Multiselect from "vue-multiselect";
-import { totalmem } from 'os';
+import { totalmem } from "os";
 export default {
   data() {
     return {
@@ -160,9 +160,9 @@ export default {
         this.VentaGeneral.total = value;
       },
       get() {
-        let total=0;
-        this.VentaGeneral.productosVendidos.forEach(item =>{
-          total += item.subtotal
+        let total = 0;
+        this.VentaGeneral.productosVendidos.forEach(item => {
+          total += item.subtotal;
         });
         this.VentaGeneral.total = total;
         return this.VentaGeneral.total;
@@ -227,12 +227,7 @@ export default {
         });
       });
     },
-    openTheModal() {
-      this.$refs.theModal.open();
-    },
-    closeTheModal() {
-      this.$refs.theModal.close();
-    },
+
     nameWithLang({ nombre, cantidad, precio_contado, precio_credito }) {
       let precioVenta = (this.VentaGeneral.tipo = 1)
         ? precio_contado
@@ -256,6 +251,12 @@ export default {
       this.getTiposVentas();
       this.getProductos();
       this.getClientes();
+    },
+    openTheModal() {
+      this.$refs.theModal.open();
+    },
+    closeTheModal() {
+      this.$refs.theModal.close();
     }
   }
 };

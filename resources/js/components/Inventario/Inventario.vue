@@ -12,8 +12,7 @@
                 <i class="fa fa-truck mr-2"></i>
                 Entregar productos
               </button>
-              <button @click="openAbastercer"
-              >Abastecer inventario</button>
+              <button class="btn btn-default" @click="openAbastercer">Abastecer inventario</button>
               <button class="btn btn-primary" @click="nuevoProducto">
                 <i class="fa fa-plus mr-2"></i> Nuevo Producto
               </button>
@@ -25,7 +24,11 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table v-if=" productos.length > 0 " id="example1" class="table table-bordered table-striped">
+              <table
+                v-if=" productos.length > 0 "
+                id="example1"
+                class="table table-bordered table-striped"
+              >
                 <thead>
                   <tr>
                     <th>Nombre</th>
@@ -42,12 +45,15 @@
                     <td>{{ item.precio_contado}}</td>
                     <td>{{ item.precio_credito }}</td>
                     <td>
-                      <button class="btn btn-default btn-sm" @click="verProducto(item)"><i class="fa fa-eye"></i></button>
-                      <button class="btn btn-primary btn-sm" @click="editarProducto(item)"><i class="fa fa-edit"></i></button>
-                      <button
-                        class="btn btn-danger btn-sm"
-                        @click="eliminarProducto(item.id)"
-                      > <i class="fa fa-trash"> </i> </button>
+                      <button class="btn btn-default btn-sm" @click="verProducto(item)">
+                        <i class="fa fa-eye"></i>
+                      </button>
+                      <button class="btn btn-primary btn-sm" @click="editarProducto(item)">
+                        <i class="fa fa-edit"></i>
+                      </button>
+                      <button class="btn btn-danger btn-sm" @click="eliminarProducto(item.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
                     </td>
                   </tr>
                 </tbody>
@@ -60,9 +66,15 @@
           </div>
         </div>
       </div>
-      <modal-producto :producto="productoModal" :titulo="tituloModal" :url="urlModal" :notificacion="notificacionModal"></modal-producto>
-      <modal-abastecer :productoList="productos"></modal-abastecer>
-      <modal-entregar :productoList="productos"></modal-entregar>
+      <modal-producto
+        :producto="productoModal"
+        :titulo="tituloModal"
+        :url="urlModal"
+        :notificacion="notificacionModal"
+      ></modal-producto>
+
+      <modal-entregar :productoList="productList"></modal-entregar>
+      <modal-abastecer :productoList="productList"></modal-abastecer>
       <div></div>
     </section>
   </div>
@@ -76,10 +88,11 @@ export default {
   data() {
     return {
       productoModal: "",
+      productList: [],
       tituloModal: "",
       urlModal: "",
       productos: "",
-      notificacionModal:''
+      notificacionModal: ""
     };
   },
   components: {
@@ -95,15 +108,18 @@ export default {
   },
   methods: {
     getProductos() {
-      axios
-        .get("/api/productos")
-        .then(rs => {
+      axios.get("/api/productos").then(rs => {
+        rs.data.forEach(element => {
           this.productos = rs.data;
-          console.log(rs);
-        })
-        .catch(err => {
-          console.log(err);
+          this.productList.push({
+            id: element.id,
+            nombre: element.nombre,
+            cantidad: parseInt(element.cantidad),
+            precio_contado: parseInt(element.precio_costo),
+            precio_credito: parseInt(element.precio_credito)
+          });
         });
+      });
     },
     nuevoProducto() {
       this.openModal();
@@ -117,14 +133,14 @@ export default {
       };
       this.tituloModal = "Nuevo producto";
       this.urlModal = "/api/producto/";
-      this.notificacionModal="Producto agregado con éxito!";
+      this.notificacionModal = "Producto agregado con éxito!";
     },
     editarProducto(producto) {
       this.productoModal = producto;
       this.tituloModal = "Editar producto";
       this.urlModal = "/api/producto/update/" + producto.id;
       this.openModal();
-      this.notificacionModal="El producto ha sido editado!"
+      this.notificacionModal = "El producto ha sido editado!";
     },
     verProducto(producto) {},
     eliminarProducto(id) {
@@ -145,10 +161,13 @@ export default {
       this.eventHub.$emit("openModal");
     },
     openAbastercer() {
+
+      console.log("dytfygjh");
+      
       this.eventHub.$emit("openAbastercer");
     },
-    openEntregar(){
-       this.eventHub.$emit("openEntregar");
+    openEntregar() {
+      this.eventHub.$emit("openEntregar");
     }
   }
 };

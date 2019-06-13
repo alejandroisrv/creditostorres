@@ -9,7 +9,7 @@ use App\ProductosVenta;
 use App\ComisionVenta;
 use App\Productos;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
 class VentasController extends Controller
 {
     /**
@@ -31,17 +31,23 @@ class VentasController extends Controller
         $data=$request->all();
         $vendedor=1;
         $total=0;
-        $venta= new Venta(['cliente_id'=> $data['cliente'], 'vendedor_id'=>$vendedor,'tipo_venta'=>$data['tipo'],'total'=> $total]);
+        $venta= new Venta(['cliente_id'=> $data['cliente']['id'], 'vendedor_id'=>$vendedor,'tipo_venta'=>$data['tipo'],'total'=> $total]);
         $acuerdoPago=new AcuerdoPago(['cuotas'=> $data['cuotas'], 'periodo_pago'=>$data['periodo']]);
         $venta->save();
         $acuerdoPago->venta_id=$venta->id;
         $acuerdoPago->save();
+      
         for($i=0; $i<count($data['productosVendidos']);$i++){
             $data['productosVendidos'][$i]['venta_id']=$venta->id;
-            $producto=Productos::findOrFail($data['productosVendidos'][$i]['id']);
+            
+            $producto=Productos::findOrFail($data['productosVendidos'][$i]['producto']['id']);
             $comision=$producto->comision*$data['productosVendidos'][$i]['cantidad'];
             ComisionVenta::create(['venta_id'=> $venta->id, 'vendedor_id'=> $vendedor, 'monto'=>$comision, 'estado'=> 0 ]);
-            ProductosVenta::create($data['productosVendidos'][$i]);
+            $productoVenta=['producto_id'=> $data['productosVendidos'][$i]['producto']['id'],
+                            'producto'=> $data['productosVendidos'][$i]['producto']['nombre'],
+                            'cantidad'=> $data['productosVendidos'][$i]['cantidad'],
+                            'venta_id' => $venta->id ];
+            ProductosVenta::create($productoVenta);
         }
 
         return $acuerdoPago;

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sucursal extends Model
 {
     protected $table="sucursales";
-    protected $fillable = ['direccion','municipio','telefono'];
+    protected $fillable = ['encargado_id','direccion','municipio_id','telefono'];
 
     public function bodegas(){
         return $this->hasMany('App\Bodega');
@@ -17,5 +17,8 @@ class Sucursal extends Model
     }
     public function clientes(){
         return $this->hasMany('App\Cliente');
+    }
+    public function municipio(){
+        return $this->belongsTo('App\municipio');
     }
 }

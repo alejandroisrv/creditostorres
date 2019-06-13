@@ -43,6 +43,11 @@ export default new VueRouter({
             name: 'sucursales',
             component: Sucursales
         },
+        {
+            path: '/login',
+            name: 'sucursales',
+            component: Sucursales
+        }
 
 
     ]
